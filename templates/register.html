@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Form</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+ <div class="wrapper">
+  <form action="/register" method="POST">
+    <h1>Register</h1>
+    
+    <div class="input-box">
+      <input type="text" name="fullname" id="fullname" placeholder="Full Name" required>
+      <i class='bx bxs-user'></i>
+    </div>
+    
+    <div class="input-box">
+      <input type="email" name="email" id="email" placeholder="Email" required>
+      <i class='bx bxs-envelope'></i>
+    </div>
+
+    <div class="input-box">
+      <input type="text" name="username" id="username" placeholder="Username" required>
+      <i class='bx bxs-user'></i>
+    </div>
+    
+    <div class="input-box">
+      <input type="password" name="password" placeholder="Password" required>
+      <i class='bx bxs-lock-alt'></i>
+    </div>
+    
+    <div class="input-box">
+      <input type="password" name="confirm-password" placeholder="Confirm Password" required>
+      <i class='bx bxs-lock-alt'></i>
+    </div>
+    
+    <div class="remember-forgot">
+      <label>
+        <input type="checkbox" required>
+        I agree to the <a href="#" onclick="openTerms()">Terms & Conditions</a>
+
+      </label>
+    </div>
+    
+    <button type="submit" class="btn">Register</button>
+    
+    <div class="register-link">
+      <p>Already have an account? <a href="{{ url_for('index') }}">Login</a></p>
+    </div>
+  </form>
+</div>
+<script>
+  const fields = ["fullname", "email", "username"];
+
+  // Save data
+  fields.forEach(id => {
+    const input = document.getElementById(id);
+    input.addEventListener("input", () => {
+      sessionStorage.setItem(id, input.value);
+    });
+  });
+
+  // Restore data
+  window.addEventListener("load", () => {
+    fields.forEach(id => {
+      const savedValue = sessionStorage.getItem(id);
+      if (savedValue) {
+        document.getElementById(id).value = savedValue;
+      }
+    });
+  });
+  
+  function openTerms() {
+    window.open(
+      "{{ url_for('terms') }}",
+      "_blank",
+      "width=700,height=600,scrollbars=yes"
+    );
+  }
+
+
+</script>
+
+</body>
+</html>
